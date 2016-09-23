@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>n00bs Home</title>
+</head>
+<body>
+    You are loggen in as {{ user }}
+    <table>
+        <thead>
+            <tr>
+                <th>Team name</th>
+                <th>Idea title</th>
+                <th>Idea description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for team in teams %}
+                <tr>
+                    <td>{{team.team_name}}</td>
+                    <td>{{team.idea_title}}</td>
+                    <td>{{team.idea_description}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <h2>Create a team</h2>
+    <form action="/create/" method="post">
+        {% csrf_token %}
+        <input type="text" name="team_name" required><br><br>
+        <input type="text" name="idea_title" required><br><br>
+        <input type="text" name="idea_description" required><br><br>
+        <input type="text" name="college" required><br><br>
+        <input type="number" name="contact" required><br><br>
+        <input type="submit"><br>
+    </form>
+    <h2>Join a team</h2>
+    <form action="/join/" method="post">
+        {% csrf_token %}
+        <input type="text" name="team_name" required><br><br>
+        <input type="text" name="college" required><br><br>
+        <input type="number" name="contact" required><br><br>
+        <input type="submit"><br>
+    </form>
+</body>
+</html>
