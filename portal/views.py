@@ -9,7 +9,7 @@ def index(request):
     return render(request, "templates/portal/index.html")
 
 
-@login_required(login_url='/')
+# @login_required(login_url='/')
 def profile(request):
     return render(request, "templates/portal/profile.html", {"teams": Team.objects.all()})
 
