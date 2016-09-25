@@ -9,9 +9,14 @@ def index(request):
     return render(request, "templates/portal/index.html")
 
 
-# @login_required(login_url='/')
+@login_required(login_url='/')
 def profile(request):
-    return render(request, "templates/portal/profile.html", {"teams": Team.objects.all()})
+    participant = Participant.objects.filter(user=request.user)
+    if participant.count() == 0:
+        print "Does not exist"
+        return render(request, "templates/portal/new_user.html", {"teams": Team.objects.all()})
+    else:
+        return render(request, "templates/portal/profile.html", {"members": Participant.objects.filter(team=participant.first().team)})
 
 
 @login_required(login_url='/')
@@ -28,8 +33,11 @@ def create(request):
 
 @login_required(login_url='/')
 def join(request):
-    join_team(request)
-    return redirect("/accounts/profile")
+    if request.method == "POST":
+        join_team(request)
+        return redirect("/accounts/profile")
+    else:
+        return HttpResponse("This method is not allowed here.")
 
 
 @login_required(login_url='/')

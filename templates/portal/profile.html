@@ -1,126 +1,21 @@
-<!DOCTYPE html>
-    {% load static %}
-  <html>
-    <head>
-      <!--Import Google Icon Font-->
-        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <!--Import materialize.css-->
-        <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}"  media="screen,projection"/>
-
-        <!--Let browser know website is optimized for mobile-->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>n00b's Dashboard</title>
-        <style>
-            .container {
-                margin-top: 8%;
-            }
-        </style>
-    </head>
-
-    <body>
-        <nav>
-            <div class="nav-wrapper teal lighten-2">
-                <a href="#" data-activates="slide-out" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
-                <a href="#" class="brand-logo">Hackman</a>
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                  <li><a href="#">{{user}}</a></li>
-                  <li><a href="/logout"><i class="material-icons">settings_power</i></a></li>
-                </ul>
-            </div>
-        </nav>
-        <ul id="slide-out" class="side-nav">
-            <a href="/accounts/profile"><img src="{% static '/images/logo1.jpeg' %}" height="150%" width="100%" alt=""></a>
-            <br><br>
-          <li><a href="#!">Team Details</a></li>
-          <li><a href="#!">Profile</a></li>
-          <li><a href="#!">Notifications</a></li>
-        </ul>
-        <div class="container">
-               <div class="row">
-                    <div class="col s12 offset-m2 m8" id="team">
-                      <div class="card small">
-                        <div class="card-content">
-                          <span class="card-title">Create a Gang.</span>
-                          <p>Create or join a team. Once you create a team, other members can join upon your approval.
-                              You may join an existing team.
-                          </p>
-                        </div>
-                        <div class="card-action">
-                          <a class="white-text btn waves-effect modal-trigger" href="#join">Join</a>
-                          <a class="white-text btn waves-effect modal-trigger" href="#create">Create</a>
-                        </div>
-                      </div>
-                    </div>
-
-               </div>
-                <!-- Modal Structure -->
-              <div id="create" class="modal modal-fixed-footer">
-                <div class="modal-content">
-                  <h4 class="center">Create a Team</h4>
-                    <form action="/create/" method="post" id="createForm">
-                        {% csrf_token %}
-                      <div class="row">
-                        <div class="input-field col s6">
-                          <i class="material-icons prefix">account_circle</i>
-                          <input placeholder="Enter team's name." id="team_name" type="text" class="validate" name="team_name" required>
-                          <label for="team_name">Team Name</label>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="input-field col s6">
-                          <i class="material-icons prefix">stars</i>
-                          <input placeholder="What is your idea?" id="idea_title" type="text" class="validate" name="idea_title" required>
-                          <label for="idea_title">Idea Title</label>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="input-field col s6">
-                            <i class="material-icons prefix">message</i>
-                          <textarea placeholder="Long description of Idea" id="idea_description" type="text" class="materialize-textarea validate" name="idea_description" required></textarea>
-                            <label for="idea_description">Idea Description</label>
-                        </div>
-                      </div>
-                        <div class="row">
-                            <div class="input-field col s6">
-                            <i class="material-icons prefix">business</i>
-                            <input placeholder="Which college are you from?" id="college" type="text" class="validate" name="college" required>
-                            <label for="college">College</label>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="input-field col s6">
-                          <i class="material-icons prefix">phone</i>
-                          <input placeholder="So that we can call you." id="contact" type="number" class="validate" name="contact" required>
-                          <label for="contact">Contact</label>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                  <div class="modal-footer">
-                      <a href="#" class="modal-action modal-close waves-effect btn-flat teal-text">Cancel</a>
-                      <a href="#" onclick="document.forms.createForm.submit()" class="waves-effect btn-flat teal-text">Create</a>
-                  </div>
-              </div>
-
-
-        </div>
-        <!--Import jQuery before materialize.js-->
-        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
-        <script>
-            // Initialize collapse button
-            $(".button-collapse").sideNav();
-            // Initialize collapsible (uncomment the line below if you use the dropdown variation)
-            //$('.collapsible').collapsible();
-            function create() {
-                $("#team").addClass("hide");
-                $("#create").removeClass("hide");
-            }
-            $(document).ready(function(){
-                // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-                $('.modal-trigger').leanModal();
-            });
-
-        </script>
-    </body>
-  </html>
+{% extends "portal/base.html" %}
+{% load static %}
+{% block title %}
+    {{ user }}'s Gang | Dashboard
+{% endblock %}
+{% block content %}
+    <ul id="slide-out" class="side-nav">
+        <a href="/accounts/profile"><img src="{% static '/images/logo1.jpeg' %}" height="150%" width="100%" alt=""></a>
+        <br><br>
+        <li><a href="#!">Team Details</a></li>
+        <li><a href="#!">Profile</a></li>
+        <li><a href="#!">Notifications</a></li>
+    </ul>
+    You are loggen in as {{ user }}
+    {% for member in members %}
+        <p>{{ member }}</p>
+    {% endfor %}
+    <script>
+        $(".button-collapse").sideNav();
+    </script>
+{% endblock %}
