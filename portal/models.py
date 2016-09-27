@@ -18,6 +18,7 @@ class Participant(models.Model):
     college = models.CharField(max_length=100)
     contact = models.IntegerField()
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    is_approved = models.BooleanField()
 
     def __unicode__(self):
         return self.user.username

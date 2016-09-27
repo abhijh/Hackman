@@ -11,10 +11,18 @@
         <li><a href="#!">Profile</a></li>
         <li><a href="#!">Notifications</a></li>
     </ul>
-    You are loggen in as {{ user }}
-    {% for member in members %}
-        <p>{{ member }}</p>
-    {% endfor %}
+    <div class="container">
+        {% if not member.is_approved %}
+            Your request is under review.
+        {% endif %}
+        <ul>
+            {% for member in members %}
+                <li>{{ member }}  {{member.is_approved}}</li>
+            {% endfor %}
+        </ul>
+        <div>Thanks for Registering with us. Team, payment and event details will be updated shortly.</div>
+    </div>
+    </div>
     <script>
         $(".button-collapse").sideNav();
     </script>

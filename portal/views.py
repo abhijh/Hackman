@@ -13,10 +13,12 @@ def index(request):
 def profile(request):
     participant = Participant.objects.filter(user=request.user)
     if participant.count() == 0:
-        print "Does not exist"
+        print "Does not exist", request.user
         return render(request, "templates/portal/new_user.html", {"teams": Team.objects.all()})
     else:
-        return render(request, "templates/portal/profile.html", {"members": Participant.objects.filter(team=participant.first().team)})
+        return render(request, "templates/portal/profile.html",
+                      {"members": Participant.objects.filter(team=participant.first().team),
+                       "is_approved": participant.first().is_approved})
 
 
 @login_required(login_url='/')
@@ -25,7 +27,7 @@ def create(request):
         team = TeamForm(request.POST)
         if team.is_valid():
             team.save()
-            join_team(request)
+            join_team(request, is_approved=True)
         return redirect("/accounts/profile")
     else:
         return HttpResponse("This method is not allowed here.")
@@ -46,11 +48,17 @@ def logout_view(request):
     return redirect('/')
 
 
-def join_team(request):
+def join_team(request, is_approved=False):
     team_name = request.POST.get("team_name")
     college = request.POST.get("college")
     contact = request.POST.get("contact")
     user = request.user
     team = Team.objects.get(team_name=team_name)
-    participant = Participant(user=user, college=college, contact=contact, team=team)
+    participant = Participant(user=user, college=college, contact=contact, team=team, is_approved=is_approved)
+    participant.save()
+
+
+def approve(user):
+    participant = Participant.objects.filter(user=user)
+    participant.first().is_approved = True
     participant.save()
