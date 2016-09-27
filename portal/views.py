@@ -2,8 +2,8 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from django.contrib.auth.models import User
 from models import TeamForm, Team, Participant
-
 
 def index(request):
     return render(request, "templates/portal/index.html")
@@ -18,7 +18,8 @@ def profile(request):
     else:
         return render(request, "templates/portal/profile.html",
                       {"members": Participant.objects.filter(team=participant.first().team),
-                       "is_approved": participant.first().is_approved})
+                       "is_approved": participant.first().is_approved,
+                       "team":participant.first().team})
 
 
 @login_required(login_url='/')
@@ -58,7 +59,13 @@ def join_team(request, is_approved=False):
     participant.save()
 
 
-def approve(user):
-    participant = Participant.objects.filter(user=user)
-    participant.first().is_approved = True
-    participant.save()
+@login_required(login_url='/')
+def approve(request):
+    users = request.POST.getlist("users")
+    if users is not None:
+        for user in users:
+            participant = Participant.objects.filter(user=User.objects.filter(username=user).first()).first()
+            participant.is_approved = True
+            participant.save()
+    return redirect("/accounts/profile/")
+

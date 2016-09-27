@@ -7,5 +7,6 @@ urlpatterns = [
     url(r'^accounts/profile/', views.profile, name='profile'),
     url(r'^logout/', views.logout_view, name='logout'),
     url(r'^create/', views.create, name='create'),
+    url(r'^approve/', views.approve, name='approve'),
     url(r'^join/', views.join, name='join'),
 ]

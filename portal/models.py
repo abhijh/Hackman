@@ -6,8 +6,8 @@ from django.forms import ModelForm
 
 class Team(models.Model):
     team_name = models.CharField(max_length=100, unique=True)
-    idea_title = models.CharField(max_length=50)
-    idea_description = models.CharField(max_length=200)
+    idea_title = models.CharField(max_length=100)
+    idea_description = models.CharField(max_length=1000)
 
     def __unicode__(self):
         return self.team_name
