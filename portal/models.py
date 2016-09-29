@@ -19,6 +19,7 @@ class Participant(models.Model):
     contact = models.IntegerField()
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     is_approved = models.BooleanField()
+    is_paid = models.BooleanField()
 
     def __unicode__(self):
         return self.user.username

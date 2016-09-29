@@ -29,6 +29,13 @@
                     <div class="nav-wrapper teal lighten-2">
                     <a href="#" class="brand-logo">Hackman</a>
                     <ul id="nav-mobile" class="right">
+                        {% if participant.is_approved %}
+                            {% if participant.is_paid %}
+                                <li><a href="/mail">Get E-ticket</a></li>
+                            {% else %}
+                                <li><a href="https://imjo.in/NtVrf">Pay now</a></li>
+                            {% endif %}
+                        {% endif %}
                       <li><a href="#">{{user}}</a></li>
                       <li><a href="/logout"><i class="material-icons">settings_power</i></a></li>
                     </ul>

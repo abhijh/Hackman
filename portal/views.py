@@ -5,6 +5,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from models import TeamForm, Team, Participant
 
+
 def index(request):
     return render(request, "templates/portal/index.html")
 
@@ -18,8 +19,8 @@ def profile(request):
     else:
         return render(request, "templates/portal/profile.html",
                       {"members": Participant.objects.filter(team=participant.first().team),
-                       "is_approved": participant.first().is_approved,
-                       "team":participant.first().team})
+                       "participant": participant.first(),
+                       "team": participant.first().team})
 
 
 @login_required(login_url='/')
@@ -49,16 +50,6 @@ def logout_view(request):
     return redirect('/')
 
 
-def join_team(request, is_approved=False):
-    team_name = request.POST.get("team_name")
-    college = request.POST.get("college")
-    contact = request.POST.get("contact")
-    user = request.user
-    team = Team.objects.get(team_name=team_name)
-    participant = Participant(user=user, college=college, contact=contact, team=team, is_approved=is_approved)
-    participant.save()
-
-
 @login_required(login_url='/')
 def approve(request):
     users = request.POST.getlist("users")
@@ -69,3 +60,13 @@ def approve(request):
             participant.save()
     return redirect("/accounts/profile/")
 
+
+def join_team(request, is_approved=False, is_paid=False):
+    team_name = request.POST.get("team_name")
+    college = request.POST.get("college")
+    contact = request.POST.get("contact")
+    user = request.user
+    team = Team.objects.get(team_name=team_name)
+    participant = Participant(user=user, college=college, contact=contact, team=team, is_approved=is_approved,
+                              is_paid=is_paid)
+    participant.save()
