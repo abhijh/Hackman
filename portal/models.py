@@ -16,7 +16,7 @@ class Team(models.Model):
 class Participant(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     college = models.CharField(max_length=100)
-    contact = models.IntegerField()
+    contact = models.CharField(max_length=13)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     is_approved = models.BooleanField()
     is_paid = models.BooleanField()
