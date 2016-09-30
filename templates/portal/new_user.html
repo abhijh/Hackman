@@ -63,11 +63,12 @@
                       <label for="contact">Contact</label>
                     </div>
                   </div>
+                    <input type="submit" id="createSubmitButton" hidden>
                 </form>
               </div>
               <div class="modal-footer">
                   <a href="#" class="modal-action modal-close waves-effect btn-flat teal-text">Cancel</a>
-                  <a href="#" onclick="$('#createForm').submit()" class="waves-effect btn-flat teal-text">Create</a>
+                  <a href="#" id="createButton" class="waves-effect btn-flat teal-text">Create</a>
               </div>
           </div>
           <!-- Modal Structure -->
@@ -92,20 +93,22 @@
                   </div>
                   <div class="row">
                     <div class="input-field col s12">
+                      <i class="material-icons prefix">account_circle</i>
                       <select name="team_name">
                         <option value="" disabled selected>Choose your option</option>
                         {% for team in teams %}
                           <option value="{{ team.team_name }}">{{ team.team_name }}</option>
                         {% endfor %}
                       </select>
-                      <label>Materialize Select</label>
+                      <label>Select you gang</label>
                     </div>
                   </div>
+                    <input type="submit" id="joinSubmitButton" hidden>
                 </form>
               </div>
               <div class="modal-footer">
                   <a href="#" class="modal-action modal-close waves-effect btn-flat teal-text">Cancel</a>
-                  <a href="#" onclick="$('#joinForm').submit()" class="waves-effect btn-flat teal-text">Join</a>
+                  <a href="#"  id="joinButton" class="waves-effect btn-flat teal-text">Join</a>
               </div>
 
 
@@ -120,6 +123,12 @@
             });
             $('select').material_select();
         });
+        $("#createButton").on('click', function () {
+            $("#createSubmitButton").trigger('click');
+         });
+        $("#joinButton").on('click', function () {
+            $("#joinSubmitButton").trigger('click');
+         });
     </script>
 
 {% endblock %}
