@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.core import serializers
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from models import TeamForm, Team, Participant
@@ -70,3 +71,11 @@ def join_team(request, is_approved=False, is_paid=False):
     participant = Participant(user=user, college=college, contact=contact, team=team, is_approved=is_approved,
                               is_paid=is_paid)
     participant.save()
+
+
+@login_required(login_url='/')
+def is_available(request):
+    if Team.objects.filter(team_name=request.GET.get("team_name")).count():
+        return HttpResponse(False)
+    else:
+        return HttpResponse(True)

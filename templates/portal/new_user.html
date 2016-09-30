@@ -32,7 +32,7 @@
                     <div class="input-field col s12">
                       <i class="material-icons prefix">account_circle</i>
                       <input placeholder="Enter team's name." id="team_name" type="text" class="validate" name="team_name" required>
-                      <label for="team_name">Team Name</label>
+                      <label for="team_name" data-error="Team name already taken." data-success="Team name available.">Team Name</label>
                     </div>
                   </div>
                   <div class="row">
@@ -67,8 +67,8 @@
                 </form>
               </div>
               <div class="modal-footer">
-                  <a href="#" class="modal-action modal-close waves-effect btn-flat teal-text">Cancel</a>
-                  <a href="#" id="createButton" class="waves-effect btn-flat teal-text">Create</a>
+                  <a class="modal-action modal-close waves-effect btn-flat teal-text">Cancel</a>
+                  <a class="waves-effect btn-flat teal-text" id="createButton">Create</a>
               </div>
           </div>
           <!-- Modal Structure -->
@@ -107,8 +107,8 @@
                 </form>
               </div>
               <div class="modal-footer">
-                  <a href="#" class="modal-action modal-close waves-effect btn-flat teal-text">Cancel</a>
-                  <a href="#"  id="joinButton" class="waves-effect btn-flat teal-text">Join</a>
+                  <a class="modal-action modal-close waves-effect btn-flat teal-text">Cancel</a>
+                  <a class="waves-effect btn-flat teal-text" id="joinButton">Join</a>
               </div>
 
 
@@ -116,19 +116,39 @@
           </div>
     </div>
     <script>
+        var is_team_name_valid = false;
         $(document).ready(function($) {
             $('.modal-trigger').leanModal();
             $(".clickable-row").click(function() {
                 window.document.location = $(this).data("href");
             });
             $('select').material_select();
+            $("#createButton").on('click', function () {
+                if(is_team_name_valid)
+                    $("#createSubmitButton").trigger('click');
+            });
+            $("#joinButton").on('click', function () {
+                $("#joinSubmitButton").trigger('click');
+             });
+            $("#team_name").on('focusout', function() {
+                is_team_name_valid = true;
+                $.ajax({url: "/isavailable?team_name="+$("#team_name").val(), success: function(is_available){
+                    if(is_available=='False') {
+                        $("#team_name").addClass("invalid");
+                        is_team_name_valid = false;
+                    }
+                 }});
+            });
+            $('input.autocomplete').autocomplete({
+                    data: {
+                    "Apple": null,
+                    "Microsoft": null,
+                    "Google": 'http://placehold.it/250x250'
+                }
+            });
         });
-        $("#createButton").on('click', function () {
-            $("#createSubmitButton").trigger('click');
-         });
-        $("#joinButton").on('click', function () {
-            $("#joinSubmitButton").trigger('click');
-         });
+
+
     </script>
 
 {% endblock %}
