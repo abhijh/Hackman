@@ -26,7 +26,7 @@ SECRET_KEY = 'q-6ux#^%iu1d*b(7q59l+pnxp2l2rvq5bx=-&n)$x*ly4c!kjn'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -88,24 +88,24 @@ WSGI_APPLICATION = 'Hackman.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#    }
+#}
+
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+     'default': {
+         'ENGINE': 'django.db.backends.mysql',
+         'NAME': 'Hackman',
+         'USER': 'root',
+         'PASSWORD': 'toor',
+         'HOST': '127.0.0.1',
+         'PORT': '3306',
+     }
 }
-
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'Hackman',
-#         'USER': 'root',
-#         'PASSWORD': 'toor',
-#         'HOST': '127.0.0.1',
-#         'PORT': '3306',
-#     }
-# }
 
 
 # Password validation

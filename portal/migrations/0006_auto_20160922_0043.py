@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='participant',
             name='team_id',
-            field=models.ForeignKey(default=0, on_delete=django.db.models.deletion.CASCADE, to='portal.Team'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='portal.Team'),
             preserve_default=False,
         ),
     ]
