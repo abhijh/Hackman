@@ -26,22 +26,24 @@
     <body>
         <div class="navbar-fixed">
             <nav>
-                    <div class="nav-wrapper teal lighten-2">
+                    <div class="nav-wrapper teal">
                     <a href="#" class="brand-logo">Hackman</a>
                     <ul id="nav-mobile" class="right">
-                        <!--{% if participant.is_approved %}-->
-                            <!--{% if participant.is_paid %}-->
-                                <!--<li><a href="/mail">Get E-ticket</a></li>-->
-                            <!--{% else %}-->
-                                <!--<li><a href="https://imjo.in/NtVrf">Pay now</a></li>-->
-                            <!--{% endif %}-->
-                        <!--{% endif %}-->
                       <li class="hide-on-small-only"><a href="#">{{user}}</a></li>
                       <li><a href="/logout"><i class="material-icons">settings_power</i></a></li>
                     </ul>
                   </div>
             </nav>
         </div>
-        {% block content %}{% endblock %}
+        <div class="container">
+                {% if participant.is_approved %}
+                        {% if participant.is_paid %}
+                            <div class="card-panel teal lighten-2 white-text">Your payment has been acknowledged.</div>
+                        {% else %}
+                            <div class="card-panel red accent-4 white-text"><i class="small material-icons black-text">warning</i>Your payment is still pending. Click <a target="_blank" href="https://imjo.in/NtVrf" class="btn-flat teal white-text">here</a> to pay. Please ignore if paid, we will update your payment status shortly.</div>
+                        {% endif %}
+                {% endif %}
+            </div>
+            {% block content %}{% endblock %}
     </body>
   </html>
