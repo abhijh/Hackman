@@ -20,6 +20,16 @@
             body {
                 background-color: #F3F3F3;
             }
+            @media screen and (max-width: 480px) {
+                #logo {
+                    margin-top:3%;
+                }
+            }
+            @media screen and (min-width: 480px) {
+                #logo {
+                    margin-top:1%;
+                }
+            }
         </style>
     </head>
 
@@ -27,7 +37,7 @@
         <div class="navbar-fixed">
             <nav>
                     <div class="nav-wrapper teal">
-                    <a href="#" class="brand-logo">Hackman</a>
+                    <img src="http://hackman.co.in/static/images/logo.png" id="logo" alt="Logo" height="60%;">
                     <ul id="nav-mobile" class="right">
                       <li class="hide-on-small-only"><a href="#">{{user}}</a></li>
                       <li><a href="/logout"><i class="material-icons">settings_power</i></a></li>
