@@ -79,3 +79,15 @@ def is_available(request):
         return HttpResponse(False)
     else:
         return HttpResponse(True)
+
+
+@login_required(login_url='/')
+def teams(request):
+    user = request.user
+    if user.is_superuser:
+        teams = Team.objects.all()
+        participants = Participant.objects.all()
+    # if Team.objects.filter(team_name=request.GET.get("team_name")).count():
+        return render(request, "templates/portal/teams.html", {"teams":teams, "participants":participants})
+    else:
+        return HttpResponse("Yu are not authorized for this area.")
