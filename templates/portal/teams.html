@@ -8,21 +8,27 @@
         <div class="row">
             {% for team in teams %}
             <div class="card-panel col m8 s12 offset-m2" style="padding:10px;">
-                <h5>{{team.team_name}}</h5>
+                <h5>{{team.team_name}} #{{team.id}}</h5>
                 <table class="centered striped responsive-table">
                     <thead>
-                        <th>User</th>
+                        <th>Id</th>
+                        <th>Name</th>
                         <th>Email</th>
                         <th>Payment status</th>
+                        <th>Contact</th>
+                        <th>College</th>
                         <th>Approval status</th>
                     </thead>
                     <tbody>
                         {% for participant in participants %}
                             {% if participant.team == team %}
                                 <tr>
+                                    <td>{{ participant.user.id }}</td>
                                     <td>{{ participant.user }}</td>
                                     <td>{{ participant.user.email }}</td>
                                     <td>{{ participant.is_paid }}</td>
+                                    <td>{{ participant.contact }}</td>
+                                    <td>{{ participant.college }}</td>
                                     <td>{{ participant.is_approved }}</td>
                                 </tr>
                             {% endif %}
